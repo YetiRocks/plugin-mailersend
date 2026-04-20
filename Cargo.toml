@@ -1,0 +1,38 @@
+[package]
+name = "ext-mailersend"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.90"
+authors = ["Yeti Rocks <jaxon@deliciousmonster.com>"]
+repository = "https://github.com/YetiRocks/ext-mailersend"
+homepage = "https://yeti.run"
+license = "MIT"
+description = "MailerSend transactional email provider for Yeti."
+
+[lib]
+name = "ext_mailersend"
+path = "src/lib.rs"
+
+[dependencies]
+# Yeti platform SDK — trait surface for EmailProvider + lifecycle hooks.
+# Pin via git until yeti-sdk is published to crates.io.
+yeti-sdk = { git = "https://github.com/YetiRocks/yeti", branch = "main" }
+
+# Async
+async-trait = "0.1"
+tokio = { version = "1", features = ["rt", "macros"] }
+
+# Serialization
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# HTTP client for MailerSend's transactional API
+reqwest = { version = "0.13", default-features = false, features = ["rustls-no-provider", "charset", "http2", "json"] }
+
+# Logging
+tracing = "0.1"
+
+[dev-dependencies]
+# reqwest needs a TLS provider installed during tests; tests call
+# `rustls::crypto::ring::default_provider().install_default()`.
+rustls = { version = "0.23", default-features = false, features = ["ring", "std", "tls12"] }
