@@ -9,6 +9,13 @@ homepage = "https://yeti.run"
 license = "MIT"
 description = "MailerSend transactional email provider for Yeti."
 
+[package.metadata.app]
+name = "MailerSend Email Provider"
+app_id = "ext-mailersend"
+plugin = true
+graphql = false
+resources = { path = [], root = "/" }
+
 [lib]
 name = "plugin_mailersend"
 path = "src/lib.rs"

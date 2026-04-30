@@ -184,8 +184,8 @@ impl Plugin for MailerSendPlugin {
         "MailerSend Email Provider"
     }
 
-    fn config_yaml(&self) -> Option<&'static str> {
-        Some(include_str!("../config.yaml"))
+    fn config_toml(&self) -> Option<&'static str> {
+        Some(include_str!("../Cargo.toml"))
     }
 
     fn depends_on(&self) -> &[&'static str] {
