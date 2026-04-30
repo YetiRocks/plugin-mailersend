@@ -1,0 +1,14 @@
+name: "MailerSend Email Provider"
+app_id: "ext-mailersend"
+version: "1.0.0"
+extension: true
+graphql: false
+
+# This plugin registers a `mailersend` EmailProvider factory in yeti-sdk.
+# It only activates when yeti-config.yaml's `email.provider.name` is
+# `mailersend`; otherwise it sits idle in the binary. See is_required()
+# in src/lib.rs.
+
+resources:
+  path: []
+  root: /
