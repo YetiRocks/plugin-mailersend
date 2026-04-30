@@ -29,8 +29,8 @@
 //!
 //! ## Registering
 //!
-//! yeti-core loads this crate as a static extension. On startup the
-//! extension calls `yeti_sdk::mail::register_provider_factory` so
+//! yeti loads this crate as a static plugin. On startup the
+//! plugin calls `yeti_sdk::mail::register_provider_factory` so
 //! later config resolution finds it by name.
 
 use std::sync::Arc;
@@ -39,7 +39,7 @@ use serde::Deserialize;
 use yeti_sdk::error::{Result, YetiError};
 use yeti_sdk::mail::{Email, EmailProvider, register_provider_factory};
 
-/// Config shape deserialized from `email.provider.*`. The extension
+/// Config shape deserialized from `email.provider.*`. The plugin
 /// controls this schema; yeti-sdk passes the raw JSON subtree.
 #[derive(Debug, Clone, Deserialize, Default)]
 #[serde(default, rename_all = "camelCase")]
@@ -148,7 +148,7 @@ impl EmailProvider for MailerSendProvider {
 
 /// Register the MailerSend factory under the name `"mailersend"`.
 /// Called once at startup — yeti-core invokes this from the static
-/// extension registration path.
+/// plugin registration path.
 pub fn register() {
     register_provider_factory(
         "mailersend",
@@ -162,20 +162,20 @@ pub fn register() {
 }
 
 // ============================================================================
-// Service hook — slots into the yeti-runtime static extension registry
+// Plugin hook — slots into the yeti-runtime static plugin registry
 // ============================================================================
 
-use yeti_sdk::extensions::{RegistrationContext, Service, StartupContext};
+use yeti_sdk::plugins::{RegistrationContext, Plugin, StartupContext};
 use yeti_sdk::resource::Context;
 
-/// Create the ext-mailersend service instance.
-pub fn service() -> Box<dyn Service> {
-    Box::new(MailerSendService)
+/// Create the ext-mailersend plugin instance.
+pub fn plugin() -> Box<dyn Plugin> {
+    Box::new(MailerSendPlugin)
 }
 
-struct MailerSendService;
+struct MailerSendPlugin;
 
-impl Service for MailerSendService {
+impl Plugin for MailerSendPlugin {
     fn id(&self) -> &'static str {
         "ext-mailersend"
     }
@@ -188,7 +188,7 @@ impl Service for MailerSendService {
         &[]
     }
 
-    fn is_extension(&self) -> bool {
+    fn is_plugin(&self) -> bool {
         true
     }
 
@@ -196,7 +196,7 @@ impl Service for MailerSendService {
         // Only load when the operator has actually configured
         // mailersend as the active provider. Otherwise this crate
         // sits idle in the binary and contributes nothing.
-        yeti_sdk::extensions::extensions_config()
+        yeti_sdk::plugins::plugins_config()
             .email
             .provider
             .as_ref()
