@@ -1,16 +1,16 @@
 [package]
-name = "ext-mailersend"
+name = "plugin-mailersend"
 version = "0.1.0"
 edition = "2024"
 rust-version = "1.90"
 authors = ["Yeti Rocks <jaxon@deliciousmonster.com>"]
-repository = "https://github.com/YetiRocks/ext-mailersend"
+repository = "https://github.com/YetiRocks/plugin-mailersend"
 homepage = "https://yeti.run"
 license = "MIT"
 description = "MailerSend transactional email provider for Yeti."
 
 [lib]
-name = "ext_mailersend"
+name = "plugin_mailersend"
 path = "src/lib.rs"
 
 [dependencies]

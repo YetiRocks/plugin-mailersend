@@ -1,4 +1,4 @@
-# ext-mailersend
+# plugin-mailersend
 
 MailerSend transactional email provider for [Yeti](https://github.com/YetiRocks/yeti).
 
@@ -23,10 +23,10 @@ Add this crate to your yeti deployment's workspace dependencies:
 ```toml
 # Cargo.toml
 [workspace.dependencies]
-ext-mailersend = { git = "https://github.com/YetiRocks/ext-mailersend", branch = "main" }
+plugin-mailersend = { git = "https://github.com/YetiRocks/plugin-mailersend", branch = "main" }
 ```
 
-Then include `ext_mailersend::service()` in your static-app registry.
+Then include `plugin_mailersend::plugin()` in your static-app registry.
 In the official yeti binary this is already wired — the extension
 registers its factory during `Service::register()` and only actually
 constructs a provider instance if the operator has selected
@@ -59,8 +59,8 @@ To test changes from yeti's tree:
 
 ```toml
 # yeti's Cargo.toml (workspace root)
-[patch."https://github.com/YetiRocks/ext-mailersend"]
-ext-mailersend = { path = "/path/to/ext-mailersend" }
+[patch."https://github.com/YetiRocks/plugin-mailersend"]
+plugin-mailersend = { path = "/path/to/plugin-mailersend" }
 ```
 
 ## License

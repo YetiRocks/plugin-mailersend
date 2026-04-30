@@ -168,7 +168,7 @@ pub fn register() {
 use yeti_sdk::plugins::{RegistrationContext, Plugin, StartupContext};
 use yeti_sdk::resource::Context;
 
-/// Create the ext-mailersend plugin instance.
+/// Create the plugin-mailersend instance.
 pub fn plugin() -> Box<dyn Plugin> {
     Box::new(MailerSendPlugin)
 }
@@ -177,7 +177,7 @@ struct MailerSendPlugin;
 
 impl Plugin for MailerSendPlugin {
     fn id(&self) -> &'static str {
-        "ext-mailersend"
+        "plugin-mailersend"
     }
 
     fn name(&self) -> &'static str {
